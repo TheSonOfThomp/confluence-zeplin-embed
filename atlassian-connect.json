@@ -1,10 +1,10 @@
     {
-      "key": "confluence-helloworld-addon",
-      "name": "Hello World",
-      "description": "My very first add-on",
+      "key": "zeplin-embed",
+      "name": "Zeplin Embed",
+      "description": "Embed Zeplin files into Confluence",
       "vendor": {
-        "name": "Angry Nerds",
-        "url": "https://www.atlassian.com/angrynerds"
+        "name": "Adam Thompson",
+        "url": "https://www.adamthompson.ca"
       },
       "baseUrl": "{{localBaseUrl}}",
       "links": {
@@ -23,16 +23,36 @@
       "modules": {
         "dynamicContentMacros": [
           {
-            "key": "helloworld-macro",
+            "url": "/macro?projectID={projectID}&screenID={screenID}",
+            "key": "zeplin-embed",
             "name": {
-              "value": "Hello World Macro"
+              "value": "Zeplin Embed"
             },
-            "url": "/macro",
             "description": {
-              "value": "Says 'Hello World'."
+              "value": "Embeds a Zeplin image into Confluence"
             },
             "outputType": "block",
-            "bodyType": "none"
+            "bodyType": "none",
+            "parameters": [
+              {
+                "identifier": "projectID",
+                "name": {
+                  "value": "Project ID"
+                },
+                "type": "string",
+                "required": true,
+                "multiple": false
+              },
+              {
+                "identifier": "screenID",
+                "name": {
+                  "value": "Screen ID"
+                },
+                "type": "string",
+                "required": true,
+                "multiple": false
+              }
+            ]
           }
         ]
       }

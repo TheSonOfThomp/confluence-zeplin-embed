@@ -1,7 +1,7 @@
-# Atlassian Add-on using Express
+# Zeplin Embed 
 
-Congratulations! You've successfully created an Atlassian Connect Add-on using the Express web application framework.
+Embed Zeplin files in Confluence
 
-## What's next?
+Currently hard-coded to qork only for the NVPS Portal team.
 
-[Read the docs](https://bitbucket.org/atlassian/atlassian-connect-express/src/master/README.md#markdown-header-install-dependencies).
+Requires [ZACS](https://github.com/CarlosBonetti/zacs).
