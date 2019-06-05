@@ -1,5 +1,9 @@
 const axios = require('axios')
 
+// Setup ZACS
+const service = require("../src/service")
+const getScreenUrl = service.getScreenUrl
+
 module.exports = function (app, addon) {
     // Root route. This route will serve the `atlassian-connect.json` unless the
     // documentation url inside `atlassian-connect.json` is set
@@ -19,7 +23,7 @@ module.exports = function (app, addon) {
 
     // Render the macro by returning html generated from the hello-world template.
     // The hello-world template is defined in /views/hello-world.hbs.
-    app.get('/macro', addon.authenticate(), function (req, res) {
+    app.get('/macro', addon.authenticate(), async function (req, res) {
       var zeplinUrl = req.query['zeplinUrl']
 
       const projectID = zeplinUrl.substring(
@@ -31,16 +35,28 @@ module.exports = function (app, addon) {
         zeplinUrl.length
       )
 
-      const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
+      // const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
 
-      res.render('zeplin-embed', {
-        title: 'Atlassian Connect',
-        projectID: projectID,
-        screenID: screenID,
-        zeplinUrl: zeplinUrl,
-        screenName: 'TEST TEST',//screenName,
-        imageSrc: 'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
-      });
+      try {
+        const screenUrl = await getScreenUrl(projectID, screenID)
+        console.log('screenUrl', screenUrl)
+
+        if (screenUrl) {
+          res.render('zeplin-embed', {
+            title: 'Atlassian Connect',
+            projectID: projectID,
+            screenID: screenID,
+            zeplinUrl: zeplinUrl,
+            // screenName: screenName,
+            imageSrc: screenUrl,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
+          });
+        } else {
+          res.status(404).send()
+        }
+      } catch (error) {
+        console.error(error.message)
+        res.status(400).send(error)
+      }
 
       // axios.get(jsonUrl).then(response => {
       //   const screen = response.data.project.screens.find(screen => screen._id === screenID)
@@ -64,7 +80,7 @@ module.exports = function (app, addon) {
     });
 
     // Add any additional route handlers you need for views or REST resources here...
-
+    
     // load any additional files you have in routes and apply those to the app
     {
         var fs = require('fs');
