@@ -3,22 +3,22 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "10.15.3"
+    "node": "10.15.x"
   },
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "async": "^3.0.1",
     "atlassian-connect-express": "^3.4.1",
     "axios": "^0.19.0",
-    "body-parser": "^1.14.2",
-    "compression": "^1.6.0",
-    "cookie-parser": "^1.4.0",
-    "errorhandler": "^1.4.2",
-    "express": "^4.13.3",
-    "express-hbs": "*",
-    "morgan": "^1.6.1",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-hbs": "^2.1.2",
+    "morgan": "^1.9.1",
+    "sequelize": "^5.8.7",
     "static-expiry": "0.0.11"
   },
   "devDependencies": {
