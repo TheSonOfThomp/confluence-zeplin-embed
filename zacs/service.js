@@ -18,16 +18,12 @@ const getProjectData = async projectId => {
         projectData = await getApiData(projectId)
         cache[projectId] = projectData
     }
-
-    console.log('projectData', projectData)
-
-
     return projectData
 }
 
 const getScreenUrl = async (projectId, screenId) => {
     let projectData = await getProjectData(projectId)
-    console.log('projectData', projectData)
+
 
     if (!projectData) {
         return null

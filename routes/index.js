@@ -1,7 +1,5 @@
-const axios = require('axios')
-
 // Setup ZACS
-const service = require("../src/service")
+const service = require("../zacs/service")
 const getScreenUrl = service.getScreenUrl
 
 module.exports = function (app, addon) {

@@ -4,7 +4,6 @@ const config = require("./config")
 
 const requestLogin = async () => {
     console.log('Logging in...\n' )
-    console.log('config', config)
     const body = await request.post("https://api.zeplin.io/users/login", {
         form: {
             handle: config.ZEPLIN_USERNAME,
@@ -55,7 +54,6 @@ const requestApiData = async (authToken, projectId) => {
 const getApiData = async projectId => {
     const auth = await requestLogin()
     const apiData = await requestApiData(auth.token, projectId)
-    console.log('apiData', apiData)
     return apiData
 }
 

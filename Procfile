@@ -1,1 +1,1 @@
-web: node app.js
+web: node credentials.js && node app.js

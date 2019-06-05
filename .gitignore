@@ -5,5 +5,6 @@ node_modules
 store.db
 *.pem
 credentials.json
+credentials_tmp.json
 .env
 settings.json
