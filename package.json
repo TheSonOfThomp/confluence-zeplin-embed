@@ -18,11 +18,8 @@
     "express": "^4.17.1",
     "express-hbs": "^2.1.2",
     "morgan": "^1.9.1",
-    "sequelize": "^5.8.7",
-    "static-expiry": "0.0.11"
-  },
-  "devDependencies": {
     "ngrok": "^2.3.0",
     "sqlite3": "^4.0.8"
-  }
+  },
+  "devDependencies": {}
 }
