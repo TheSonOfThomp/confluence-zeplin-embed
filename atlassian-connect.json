@@ -23,7 +23,7 @@
       "modules": {
         "dynamicContentMacros": [
           {
-            "url": "/macro?projectID={projectID}&screenID={screenID}",
+            "url": "/macro?zeplinUrl={zeplinUrl}",
             "key": "zeplin-embed",
             "name": {
               "value": "Zeplin Embed"
@@ -35,18 +35,9 @@
             "bodyType": "none",
             "parameters": [
               {
-                "identifier": "projectID",
+                "identifier": "zeplinUrl",
                 "name": {
-                  "value": "Project ID"
-                },
-                "type": "string",
-                "required": true,
-                "multiple": false
-              },
-              {
-                "identifier": "screenID",
-                "name": {
-                  "value": "Screen ID"
+                  "value": "Zeplin URL"
                 },
                 "type": "string",
                 "required": true,

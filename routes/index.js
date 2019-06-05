@@ -20,23 +20,31 @@ module.exports = function (app, addon) {
     // Render the macro by returning html generated from the hello-world template.
     // The hello-world template is defined in /views/hello-world.hbs.
     app.get('/macro', addon.authenticate(), function (req, res) {
-      var projectID = req.query['projectID']
-      var screenID = req.query['screenID']
-      const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
+      var zeplinUrl = req.query['zeplinUrl']
 
-      console.log(jsonUrl)
+      const projectID = zeplinUrl.substring(
+        zeplinUrl.indexOf('project/') + 8,
+        zeplinUrl.indexOf('screen/') - 1 
+      )
+      const screenID = zeplinUrl.substring(
+        zeplinUrl.indexOf('screen/') + 7,
+        zeplinUrl.length
+      )
+
+      const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
 
       axios.get(jsonUrl).then(response => {
         const screen = response.data.project.screens.find(screen => screen._id === screenID)
         const imageSrc = screen.latestVersion.snapshot.url
         const screenName = screen.name
 
-        console.log(imageSrc, screenName)
+        // console.log(imageSrc, screenName)
 
         res.render('zeplin-embed', {
           title: 'Atlassian Connect',
           projectID: projectID,
           screenID: screenID,
+          zeplinUrl: zeplinUrl,
           screenName: screenName,
           imageSrc: imageSrc,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
         });
@@ -44,10 +52,6 @@ module.exports = function (app, addon) {
       }).catch(e => {
         console.error(e)
       })
-
-
-      
-
     });
 
     // Add any additional route handlers you need for views or REST resources here...

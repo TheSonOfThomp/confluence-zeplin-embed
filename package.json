@@ -2,12 +2,15 @@
   "name": "zeplin-embed-addon",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "10.15.3"
+  },
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "async": "2.0.1",
-    "atlassian-connect-express": "2.1.3",
+    "async": "^3.0.1",
+    "atlassian-connect-express": "^3.4.1",
     "axios": "^0.19.0",
     "body-parser": "^1.14.2",
     "compression": "^1.6.0",
@@ -15,10 +18,11 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-hbs": "*",
-    "jugglingdb-sqlite3": "0.0.5",
     "morgan": "^1.6.1",
-    "sqlite3": "^4.0.8",
-    "static-expiry": ">=0.0.5",
-    "urijs": "1.18.1"
+    "static-expiry": "0.0.11"
+  },
+  "devDependencies": {
+    "ngrok": "^2.3.0",
+    "sqlite3": "^4.0.8"
   }
 }
