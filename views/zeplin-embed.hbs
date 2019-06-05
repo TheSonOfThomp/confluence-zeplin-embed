@@ -8,14 +8,19 @@
     color: rgb(23, 43, 77);
   "
 >
+
 <a href={{zeplinUrl}} target="_blank">
-  <img 
-    src={{imageSrc}}
-    style="
-      max-width: 100%;
-      height: auto;
-    "
-  />
+  {{#if imageSrc}}
+    <img 
+      src={{imageSrc}}
+      style="
+        max-width: 100%;
+        height: auto;
+      "
+    />
+  {{else}}
+    <span>{{zeplinUrl}}</span>
+  {{/if}}
 </a>
 {{!-- <span>{{screenName}}</span> --}}
 </div>

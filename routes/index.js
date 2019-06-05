@@ -39,18 +39,15 @@ module.exports = function (app, addon) {
         const screenUrl = await getScreenUrl(projectID, screenID)
         console.log('screenUrl', screenUrl)
 
-        if (screenUrl) {
-          res.render('zeplin-embed', {
-            title: 'Atlassian Connect',
-            projectID: projectID,
-            screenID: screenID,
-            zeplinUrl: zeplinUrl,
-            // screenName: screenName,
-            imageSrc: screenUrl,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
-          });
-        } else {
-          res.status(404).send()
-        }
+        res.render('zeplin-embed', {
+          title: 'Atlassian Connect',
+          projectID: projectID,
+          screenID: screenID,
+          zeplinUrl: zeplinUrl,
+          // screenName: screenName,
+          imageSrc: screenUrl || null,
+        });
+
       } catch (error) {
         console.error(error.message)
         res.status(400).send(error)
