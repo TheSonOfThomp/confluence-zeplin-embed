@@ -90,5 +90,5 @@ routes(app, addon);
 http.createServer(app).listen(port, function(){
   console.log('Add-on server running at http://' + os.hostname() + ':' + port);
   // Enables auto registration/de-registration of add-ons into a host in dev mode
-  if (devEnv) addon.register();
+  addon.register();
 });

@@ -19,7 +19,7 @@ module.exports = function (app, addon) {
 
     // Render the macro by returning html generated from the hello-world template.
     // The hello-world template is defined in /views/hello-world.hbs.
-    app.get('/macro', function (req, res) {
+    app.get('/macro', addon.authenticate(), function (req, res) {
       var zeplinUrl = req.query['zeplinUrl']
 
       const projectID = zeplinUrl.substring(
@@ -33,25 +33,34 @@ module.exports = function (app, addon) {
 
       const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
 
-      axios.get(jsonUrl).then(response => {
-        const screen = response.data.project.screens.find(screen => screen._id === screenID)
-        const imageSrc = screen.latestVersion.snapshot.url
-        const screenName = screen.name
+      res.render('zeplin-embed', {
+        title: 'Atlassian Connect',
+        projectID: projectID,
+        screenID: screenID,
+        zeplinUrl: zeplinUrl,
+        screenName: 'TEST TEST',//screenName,
+        imageSrc: 'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
+      });
 
-        // console.log(imageSrc, screenName)
+      // axios.get(jsonUrl).then(response => {
+      //   const screen = response.data.project.screens.find(screen => screen._id === screenID)
+      //   const imageSrc = screen.latestVersion.snapshot.url
+      //   const screenName = screen.name
 
-        res.render('zeplin-embed', {
-          title: 'Atlassian Connect',
-          projectID: projectID,
-          screenID: screenID,
-          zeplinUrl: zeplinUrl,
-          screenName: screenName,
-          imageSrc: imageSrc,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
-        });
+      //   // console.log(imageSrc, screenName)
 
-      }).catch(e => {
-        console.error(e)
-      })
+      //   res.render('zeplin-embed', {
+      //     title: 'Atlassian Connect',
+      //     projectID: projectID,
+      //     screenID: screenID,
+      //     zeplinUrl: zeplinUrl,
+      //     screenName: screenName,
+      //     imageSrc: imageSrc,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
+      //   });
+
+      // }).catch(e => {
+      //   console.error(e)
+      // })
     });
 
     // Add any additional route handlers you need for views or REST resources here...
