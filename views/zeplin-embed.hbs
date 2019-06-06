@@ -1,26 +1,13 @@
 {{!< layout}}
-<div 
-  style="
-    text-align: center;
-    line-height: 2em;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    background-color: white;
-    color: rgb(23, 43, 77);
-  "
->
-
-<a href={{zeplinUrl}} target="_blank">
-  {{#if imageSrc}}
-    <img 
-      src={{imageSrc}}
-      style="
-        max-width: 100%;
-        height: auto;
-      "
-    />
-  {{else}}
-    <span>{{zeplinUrl}}</span>
-  {{/if}}
-</a>
-{{!-- <span>{{screenName}}</span> --}}
+<div class="wrapper">
+    {{#if imageSrc}}
+      <img 
+        src={{imageSrc}}
+        class="image"
+      />
+      <a href={{zeplinUrl}} target="_blank" title="Open in Zeplin">{{screenName}}</a>
+    {{else}}
+      <href={{zeplinUrl}} target="_blank" title="Open in Zeplin">{{zeplinUrl}}</a>
+    {{/if}}
+  </a>
 </div>

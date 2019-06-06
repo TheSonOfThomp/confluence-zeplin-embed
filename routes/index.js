@@ -1,6 +1,5 @@
 // Setup ZACS
-const service = require("../zacs/service")
-const getScreenUrl = service.getScreenUrl
+const zacs = require("../zacs/service")
 
 module.exports = function (app, addon) {
     // Root route. This route will serve the `atlassian-connect.json` unless the
@@ -36,42 +35,25 @@ module.exports = function (app, addon) {
       // const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
 
       try {
-        const screenUrl = await getScreenUrl(projectID, screenID)
-        console.log('screenUrl', screenUrl)
+        const screenData = await zacs.getScreenData(projectID, screenID)
+        const screenUrl = await zacs.getUrlFromScreenData(screenData)
+        const screenName = screenData.name
+        // console.log('screenUrl', screenUrl)
 
         res.render('zeplin-embed', {
-          title: 'Atlassian Connect',
           projectID: projectID,
           screenID: screenID,
           zeplinUrl: zeplinUrl,
-          // screenName: screenName,
+          screenName: screenName,
           imageSrc: screenUrl || null,
         });
 
       } catch (error) {
         console.error(error.message)
-        res.status(400).send(error)
+        res.render('40x-error', {
+          zeplinUrl: zeplinUrl,
+        })
       }
-
-      // axios.get(jsonUrl).then(response => {
-      //   const screen = response.data.project.screens.find(screen => screen._id === screenID)
-      //   const imageSrc = screen.latestVersion.snapshot.url
-      //   const screenName = screen.name
-
-      //   // console.log(imageSrc, screenName)
-
-      //   res.render('zeplin-embed', {
-      //     title: 'Atlassian Connect',
-      //     projectID: projectID,
-      //     screenID: screenID,
-      //     zeplinUrl: zeplinUrl,
-      //     screenName: screenName,
-      //     imageSrc: imageSrc,//'https://cdn.zeplin.io/5c9bef7cbe520e781e8ce7bb/screens/907B211B-5946-4A36-94AE-33A9FA463FC4.png',
-      //   });
-
-      // }).catch(e => {
-      //   console.error(e)
-      // })
     });
 
     // Add any additional route handlers you need for views or REST resources here...

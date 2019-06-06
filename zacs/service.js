@@ -21,26 +21,32 @@ const getProjectData = async projectId => {
     return projectData
 }
 
-const getScreenUrl = async (projectId, screenId) => {
+const getScreenData = async (projectId, screenId) => {
     let projectData = await getProjectData(projectId)
-
-
-    if (!projectData) {
-        return null
-    }
+    if (!projectData) { return null }
 
     const screen = projectData.project.screens.find(
         screen => screen._id === screenId
     )
 
-    if (!screen) {
-        return null
-    }
+    if (!screen) { return null }
+    else return screen
+}
 
-    return screen.latestVersion.snapshot.url
+const getScreenUrl = async (projectId, screenId) => {
+    let screenData = await getProjectData(projectId, screenId)
+    if (!screenData) { return null }
+    else return getUrlFromScreenData(screenData)
+}
+
+const getUrlFromScreenData = async screenData => {
+    if (!screenData) { return null }
+    else return screenData.latestVersion.snapshot.url
 }
 
 module.exports = {
     getProjectData,
-    getScreenUrl
+    getScreenUrl,
+    getScreenData,
+    getUrlFromScreenData
 }
