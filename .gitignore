@@ -2,6 +2,7 @@
 *.idea
 .DS_Store
 node_modules
+node_modules/
 store.db
 *.pem
 credentials.json
