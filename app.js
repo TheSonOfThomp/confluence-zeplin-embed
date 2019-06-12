@@ -54,8 +54,6 @@ app.set('views', viewsDir);
 const devEnv = app.get('env') == 'development';
 app.use(morgan(devEnv ? 'dev' : 'combined'));
 
-
-
 // Declare any Express [middleware](http://expressjs.com/api.html#middleware) you'd like to use here
 // Log requests, using an appropriate formatter by env
 // Include request parsers

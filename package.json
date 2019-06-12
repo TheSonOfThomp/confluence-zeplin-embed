@@ -6,7 +6,7 @@
     "node": "10.15.x"
   },
   "scripts": {
-    "start": "node credentials.js && node app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "atlassian-connect-express": "^3.4.1",
