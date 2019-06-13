@@ -25,6 +25,11 @@
           {
             "url": "/macro?zeplinUrl={zeplinUrl}",
             "key": "zeplin-embed",
+            "icon": {
+              "width": 256,
+              "height": 256,
+              "url": "http://ux.sysdaar.org.s3.amazonaws.com/confluence-zeplin-embed-addon/assets/addon-icon.png"
+            },
             "name": {
               "value": "Zeplin Embed"
             },

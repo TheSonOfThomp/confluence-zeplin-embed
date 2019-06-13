@@ -9,3 +9,4 @@ credentials.json
 credentials_tmp.json
 .env
 settings.json
+assets/*.psd
