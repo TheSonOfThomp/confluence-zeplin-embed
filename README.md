@@ -2,7 +2,7 @@
 
 Embed Zeplin files in Confluence with confidence!
 
-![Logo](http://ux.sysdaar.org.s3.amazonaws.com/confluence-zeplin-embed-addon/assets/addon-icon.png)
+![Logo](assets/addon-icon.png)
 
 
 # Run Locally
