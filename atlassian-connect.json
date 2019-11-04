@@ -4,7 +4,7 @@
       "description": "Embed Zeplin files into Confluence",
       "vendor": {
         "name": "Adam Thompson",
-        "url": "https://www.adamthompson.ca"
+        "url": "https://www.thesonofthomp.com"
       },
       "baseUrl": "{{localBaseUrl}}",
       "links": {
