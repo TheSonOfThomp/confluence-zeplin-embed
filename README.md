@@ -56,8 +56,7 @@ Your environment should update to allow `https`
 - Go to `marketplace.atlassian.com`
 - Click your profile picture (top right) and select `Publish a new app`
 - Select your vendor & `Provide an Installation URL`
-- Click `Enter URL` and paste your new `https://addon.my-domain.com`
-  - The rest should autopopulate from the url
+- Click `Enter URL` and paste your new url: `https://addon.my-domain.com/atlassian-connect.json`
 - Select `Save as private`
 ### Share the app
 - Select 'Private listings' tab
