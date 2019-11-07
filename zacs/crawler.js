@@ -19,11 +19,13 @@ const requestLogin = async () => {
     return auth
 }
 
-const requestApiData = async (authToken, projectId) => {
-    console.log('Requesting', authToken, projectId)
+const requestApiData = async (authToken, groupID, isComponent = false) => {
+    
+    const groupType = isComponent ? 'styleguide' : 'project';
+    console.log('Requesting', authToken, `for ${groupType}`, groupID, `\n`)
 
     const body = await request.get(
-        `https://app.zeplin.io/project/${projectId}`,
+        `https://app.zeplin.io/${groupType}/${groupID}`,
         {
             headers: {
                 Cookie: request.cookie(`userToken=${authToken}`),
@@ -36,24 +38,24 @@ const requestApiData = async (authToken, projectId) => {
 
     if (!res || !res[1]) {
         throw new Error(
-            `API data for project '${projectId}' not found. Check if project exists and if the provided credentials have access to it.`
+            `No response for ${groupType} '${groupID}'. Check if project exists and if the provided credentials have access to it.`
         )
     }
 
     const data = eval(res[1]) // TODO: DANGER
 
-    if (!data || !data.project) {
+    if (!data) {
         throw new Error(
-            `API data for project '${projectId}' not found. Check if project exists and if the provided credentials have access to it.`
+            `API data for ${groupType} '${groupID}' not found. Check if project exists and if the provided credentials have access to it.`
         )
     }
 
     return data
 }
 
-const getApiData = async projectId => {
+const getApiData = async (groupID, isComponent = false) => {
     const auth = await requestLogin()
-    const apiData = await requestApiData(auth.token, projectId)
+    const apiData = await requestApiData(auth.token, groupID, isComponent)
     return apiData
 }
 

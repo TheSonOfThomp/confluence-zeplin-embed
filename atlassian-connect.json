@@ -1,6 +1,6 @@
     {
-      "key": "zeplin-embed",
-      "name": "Zeplin Embed",
+      "key": "zeplin-embed-test",
+      "name": "Zeplin Embed TEST",
       "description": "Embed Zeplin files into Confluence",
       "vendor": {
         "name": "Adam Thompson",

@@ -18,31 +18,45 @@ module.exports = function (app, addon) {
         });
     });
 
-    // Render the macro by returning html generated from the hello-world template.
-    // The hello-world template is defined in /views/hello-world.hbs.
+    // get the projectID from the url
     app.get('/macro', addon.authenticate(), async function (req, res) {
       var zeplinUrl = req.query['zeplinUrl']
 
-      const projectID = zeplinUrl.substring(
-        zeplinUrl.indexOf('project/') + 8,
-        zeplinUrl.indexOf('screen/') - 1 
-      )
-      const screenID = zeplinUrl.substring(
-        zeplinUrl.indexOf('screen/') + 7,
-        zeplinUrl.length
-      )
+      let isComponent = false;
+      let groupID, imageID; 
+      // groupID is either project or styleGuide ID
+      // imageID is either screen or component ID
 
-      // const jsonUrl = `http://ux.sysdaar.org/zeplin/${projectID}.json`
+      if (zeplinUrl.includes('project')) {
+        groupID = zeplinUrl.substring(
+          zeplinUrl.indexOf('project/') + 8,
+          zeplinUrl.indexOf('screen/') - 1 
+        )
+        imageID = zeplinUrl.substring(
+          zeplinUrl.indexOf('screen/') + 7,
+          zeplinUrl.length
+        )
+      } else if (zeplinUrl.includes('styleguide')){
+        isComponent = true;
+        groupID = zeplinUrl.substring(
+          zeplinUrl.indexOf('styleguide/') + 11,
+          zeplinUrl.indexOf('components') - 1
+        )
+        imageID = zeplinUrl.substring(
+          zeplinUrl.indexOf('coid=') + 5,
+          zeplinUrl.length
+        )
+      }
 
       try {
-        const screenData = await zacs.getScreenData(projectID, screenID)
+        const screenData = await zacs.getScreenData(groupID, imageID, isComponent)
         const screenUrl = await zacs.getUrlFromScreenData(screenData)
         const screenName = screenData.name
         // console.log('screenUrl', screenUrl)
 
         res.render('zeplin-embed', {
-          projectID: projectID,
-          screenID: screenID,
+          projectID: groupID,
+          screenID: imageID,
           zeplinUrl: zeplinUrl,
           screenName: screenName,
           imageSrc: screenUrl || null,

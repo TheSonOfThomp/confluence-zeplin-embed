@@ -10,30 +10,53 @@ const clearCacheJob = schedule.scheduleJob("0 0 * * * *", () => {
     console.log("Cache cleaned")
 })
 
-const getProjectData = async projectId => {
-    let projectData = cache[projectId]
+const getProjectData = async (groupID, isComponent = false) => {
+    let projectData = cache[groupID]
 
     if (!projectData) {
-        console.info(`Retrieving API data for project ${projectId}`)
-        projectData = await getApiData(projectId)
-        cache[projectId] = projectData
+        console.info(`Retrieving API data for ${isComponent ? 'styleguide' : 'project'} ${groupID}`)
+        projectData = await getApiData(groupID, isComponent)
+        cache[groupID] = projectData
     }
     return projectData
 }
 
-const getScreenData = async (projectId, screenId) => {
-    let projectData = await getProjectData(projectId)
-    if (!projectData) { return null }
+const getScreenData = async (groupID, imageID, isComponent = false) => {
+    let groupData = await getProjectData(groupID, isComponent)
 
-    const screen = projectData.project.screens.find(
-        screen => screen._id === screenId
-    )
+    if (!groupData) { return null }
 
-    if (!screen) { return null }
-    else return screen
+    if (isComponent) {
+        return findComponent(imageID, groupData.barrel) || null
+    } else {
+        const screen = groupData.project.screens.find(
+            screen => screen._id === imageID
+        )
+    
+        if (!screen) { return null }
+        else return screen
+    }
 }
 
-const getScreenUrl = async (projectId, screenId) => {
+const findComponent = (componentID, componentSection) => {
+    const subsections = componentSection.componentSections
+    const components = componentSection.components
+
+    if (!!components) {
+        let foundComponent = components.find(c => c._id === componentID )
+        if (!!foundComponent) {
+            return foundComponent
+        }
+    } 
+    if (!!subsections) {
+        for(let subsection of subsections){
+            foundComponent = findComponent(componentID, subsection)
+            if (!!foundComponent) return foundComponent
+        }
+    }
+}
+
+const getScreenUrl = async (projectId, screenId, isComponent = false) => {
     let screenData = await getProjectData(projectId, screenId)
     if (!screenData) { return null }
     else return getUrlFromScreenData(screenData)
