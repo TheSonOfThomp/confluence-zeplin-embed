@@ -52,7 +52,6 @@ module.exports = function (app, addon) {
         const screenData = await zacs.getScreenData(groupID, imageID, isComponent)
         const screenUrl = await zacs.getUrlFromScreenData(screenData)
         const screenName = screenData.name
-        // console.log('screenUrl', screenUrl)
 
         res.render('zeplin-embed', {
           projectID: groupID,

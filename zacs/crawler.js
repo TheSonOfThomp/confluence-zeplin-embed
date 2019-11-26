@@ -28,7 +28,7 @@ const requestApiData = async (authToken, groupID, isComponent = false) => {
     `https://app.zeplin.io/${groupType}/${groupID}`,
     {
       headers: {
-          Cookie: request.cookie(`userToken=${authToken}`),
+        Cookie: request.cookie(`userToken=${authToken}`),
       },
     }
   )
