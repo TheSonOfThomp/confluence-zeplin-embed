@@ -22,43 +22,15 @@ module.exports = function (app, addon) {
     app.get('/macro', addon.authenticate(), async function (req, res) {
       var zeplinUrl = req.query['zeplinUrl']
 
-      let isComponent = false;
-      let groupID, imageID; 
-      // groupID is either project or styleGuide ID
-      // imageID is either screen or component ID
-
-      if (zeplinUrl.includes('project')) {
-        groupID = zeplinUrl.substring(
-          zeplinUrl.indexOf('project/') + 8,
-          zeplinUrl.indexOf('screen/') - 1 
-        )
-        imageID = zeplinUrl.substring(
-          zeplinUrl.indexOf('screen/') + 7,
-          zeplinUrl.length
-        )
-      } else if (zeplinUrl.includes('styleguide')){
-        isComponent = true;
-        groupID = zeplinUrl.substring(
-          zeplinUrl.indexOf('styleguide/') + 11,
-          zeplinUrl.indexOf('components') - 1
-        )
-        imageID = zeplinUrl.substring(
-          zeplinUrl.indexOf('coid=') + 5,
-          zeplinUrl.length
-        )
-      }
-
       try {
-        const screenData = await zacs.getScreenData(groupID, imageID, isComponent)
-        const screenUrl = await zacs.getUrlFromScreenData(screenData)
-        const screenName = screenData.name
+        const screenData = await zacs.getScreenData(zeplinUrl)
 
         res.render('zeplin-embed', {
-          projectID: groupID,
-          screenID: imageID,
-          zeplinUrl: zeplinUrl,
-          screenName: screenName,
-          imageSrc: screenUrl || null,
+          projectID: screenData.groupID,
+          screenID: screenData.imageID,
+          zeplinUrl: screenData.zeplinUrl,
+          screenName: screenData.screenName,
+          imageSrc: screenData.screenUrl || null,
         });
 
       } catch (error) {

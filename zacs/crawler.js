@@ -1,4 +1,5 @@
 const request = require("request-promise-native")
+const axios = require("axios");
 
 const config = require("./config")
 
@@ -10,7 +11,6 @@ const requestLogin = async () => {
       password: config.ZEPLIN_PASSWORD,
     },
   })
-  console.log('body', body)
 
   const auth = JSON.parse(body)
   if (!auth || !auth.token) {
@@ -59,6 +59,23 @@ const getApiData = async (groupID, isComponent = false) => {
   return apiData
 }
 
+const getTrueURL = async (zeplinUrl) => {
+  const auth = await requestLogin()
+
+  const resp = await axios.get(
+    zeplinUrl,
+      {
+      headers: {
+        Cookie: request.cookie(`userToken=${auth.token}`),
+      },
+    }
+  )
+  const path = decodeURIComponent(resp.request.path)
+  const trueUrl = `https://app.zeplin.io/${path.slice(path.indexOf('redirect=') + 10)}`
+  return trueUrl
+}
+
 module.exports = {
+  getTrueURL,
   getApiData
 }

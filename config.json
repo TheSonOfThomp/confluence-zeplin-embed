@@ -3,6 +3,7 @@
   // a different env, set NODE_ENV (http://expressjs.com/api.html#app.configure)
   "development": {
 
+    "key": "zeplin-embed-test",
     // This is the port your Express server will listen on
     "port": 3000,
 
@@ -58,8 +59,10 @@
   // This is the production add-on configuration, which is enabled by setting
   // the NODE_ENV=production environment variable.
   "production": {
+    "key": "zeplin-embed"
+    ,
     // On a PaaS host like Heroku, the runtime environment will provide the
-    // HTTP port to you via the PORT environement variable, so we configure
+    // HTTP port to you via the PORT environment variable, so we configure
     // that to be honored here.
     "port": "$PORT",
 
